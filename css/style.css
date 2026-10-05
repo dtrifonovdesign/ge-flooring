@@ -117,14 +117,6 @@ h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.25; }
 .hint-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--oak); animation: pulse 2.2s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.7); opacity: .35; } }
 
-.tilt-btn {
-  position: absolute; z-index: 3; left: 50%; bottom: 56px; transform: translateX(-50%);
-  min-height: 44px; padding: 0 20px; background: transparent; color: var(--charcoal);
-  border: 1.5px solid var(--charcoal); border-radius: 2px;
-  font: 500 .75rem/1 var(--font); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
-}
-.tilt-btn:hover { background: var(--charcoal); color: var(--cream); }
-
 .tip {
   position: absolute; z-index: 3; left: 0; top: 0; pointer-events: none;
   padding: 7px 12px; background: var(--charcoal); color: var(--cream);

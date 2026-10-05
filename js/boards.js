@@ -182,35 +182,7 @@
     hero.addEventListener('pointerdown', setPointer, { passive: true });
     hero.addEventListener('pointerleave', function () { pointerNDC = null; setHover(null); lastMove = performance.now() - 2000; }, { passive: true });
   }
-  // ---------- phone tilt ----------
-  var tilt = { x: 0, y: 0 };
-  var baseBeta = null;
-  function onTilt(e) {
-    if (e.gamma == null || e.beta == null) return;
-    if (baseBeta === null) baseBeta = e.beta;           // however the phone is first held counts as neutral
-    tilt.x = clamp(e.gamma / 28, -1, 1);
-    tilt.y = clamp(-(e.beta - baseBeta) / 28, -1, 1);
-    tiltActive = true;
-    setHintText('Tilt your phone or scroll');
-  }
-  var tiltActive = false;
-  function setHintText(t) { var el = hint && hint.querySelector('.hint-text'); if (el && el.textContent !== t) el.textContent = t; }
-  function setupTilt() {
-    if (!coarse || reduce || !('DeviceOrientationEvent' in window)) return;
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      // iOS asks for permission, and only from a tap.
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'tilt-btn'; b.textContent = 'Enable tilt';
-      b.addEventListener('click', function () {
-        DeviceOrientationEvent.requestPermission().then(function (s) {
-          if (s === 'granted') window.addEventListener('deviceorientation', onTilt);
-        }).catch(function () {}).then(function () { b.remove(); });
-      });
-      hero.appendChild(b);
-    } else {
-      window.addEventListener('deviceorientation', onTilt);
-    }
-  }
+  // Phones: the hint fades once the visitor starts scrolling.
   if (coarse && hint) {
     window.addEventListener('scroll', function () { if (window.scrollY > 40) hint.classList.add('gone'); }, { passive: true });
   }
@@ -231,10 +203,10 @@
     var idle = now - lastMove > 3000;
 
     if (coarse) {
-      // Phones: no touch tracking. The boards shift with device tilt and drift as you scroll.
+      // Phones: no touch tracking and no sensors. The boards shift and tilt as you scroll.
       var sp = window.scrollY / Math.max(H, 1);
-      pt.x = clamp(tilt.x + Math.sin(sp * 2.4) * 0.5, -1, 1);
-      pt.y = clamp(tilt.y + Math.cos(sp * 1.8) * 0.3 - sp * 0.15, -1, 1);
+      pt.x = clamp(Math.sin(sp * 3.0) * 0.85, -1, 1);
+      pt.y = clamp(Math.cos(sp * 2.2) * 0.45 - sp * 0.2, -1, 1);
     } else if (idle) {
       // Wander gently when the mouse rests.
       pt.x = Math.sin(tAll * 0.35) * 0.6;
@@ -302,9 +274,8 @@
     hero.classList.add('ready');
     if (hint) {
       if (reduce) hint.style.display = 'none';
-      else if (coarse) setHintText('Scroll to move the boards');
+      else if (coarse) hint.querySelector('.hint-text').textContent = 'Scroll to move the boards';
     }
-    setupTilt();
     if (reduce) renderOnce();
     else {
       if ('IntersectionObserver' in window) {
