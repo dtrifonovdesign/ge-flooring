@@ -1,4 +1,4 @@
-# G&E Flooring website
+﻿# G&E Flooring website
 
 A static, build-free site. The hero is a three.js scene of floating flooring boards that lean toward the cursor (drag on touch screens). Textures are cropped from the company's own job photos.
 
@@ -12,7 +12,7 @@ Edit **`js/config.js`**:
 | `email` | Where the estimate form emails if no endpoint is set. |
 | `formEndpoint` | Optional. A [Formspree](https://formspree.io) URL makes the form submit in the background. Leave empty to open the visitor's email app. |
 
-Currently set to `(303) 875-6521` and `gregsflooring@gmail.com`.
+Currently set to `(303) 875-6521` and `gregsfloorings@gmail.com`.
 
 ## Run locally
 
