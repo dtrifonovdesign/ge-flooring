@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>G&amp;E Flooring | Hardwood, Laminate &amp; Tile</title>
+  <meta name="description" content="G&amp;E Flooring: professional installation and refinishing of hardwood, vinyl, laminate and tile for homes and businesses in Minneapolis, St. Paul and the Twin Cities. Free estimates.">
+  <meta name="theme-color" content="#F6F2EA">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <a class="brand" href="#top" aria-label="G&E Flooring, home">
+      <img src="assets/brand/logo-horizontal.svg" alt="G&E Flooring" width="150" height="42">
+    </a>
+    <nav class="header-actions" aria-label="Primary">
+      <a class="link-quiet" href="#work">Our work</a>
+      <a class="link-quiet phone-link" data-phone href="tel:">Call</a>
+      <a class="btn btn-small" href="#estimate">Free estimate</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- HERO: the floating boards live in the canvas -->
+    <section class="hero" aria-labelledby="hero-title">
+      <canvas id="boards" aria-hidden="true"></canvas>
+      <div class="hero-fallback" aria-hidden="true">
+        <img src="assets/tex/wood-honey.jpg" alt="">
+        <img src="assets/tex/tile-marble.jpg" alt="">
+        <img src="assets/tex/tile-flower.jpg" alt="">
+      </div>
+      <div class="hero-veil" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <p class="label">Hardwood &middot; Vinyl &middot; Tile</p>
+        <h1 id="hero-title">Floors, laid&nbsp;right.</h1>
+        <p class="lede">Professional installation and refinishing for homes and businesses across the Twin&nbsp;Cities.</p>
+        <div class="cta-row">
+          <a class="btn" href="#estimate">Request a free estimate</a>
+          <a class="btn btn-ghost" data-phone href="tel:">Call</a>
+        </div>
+      </div>
+
+      <p class="hint" id="hint" aria-hidden="true"><span class="hint-dot"></span><span class="hint-text">Move your cursor. The boards follow.</span></p>
+      <div class="tip" id="tip" aria-hidden="true"></div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="wrap">
+        <p class="label label-oak">What we do</p>
+        <h2 id="services-title">Vinyl plank and tile. One careful crew.</h2>
+        <ul class="services">
+          <li>
+            <span class="num" aria-hidden="true">01</span>
+            <h3>Plank &amp; hardwood</h3>
+            <p>Vinyl plank, laminate and hardwood installed flat, tight and ready to live on.</p>
+          </li>
+          <li>
+            <span class="num" aria-hidden="true">02</span>
+            <h3>Tile &amp; mosaic</h3>
+            <p>Floors, showers and walls in porcelain, marble-look and hand-set hex mosaics.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- BEFORE / AFTER -->
+    <section class="section section-tint" id="work" aria-labelledby="work-title">
+      <div class="wrap">
+        <p class="label label-oak">Our work</p>
+        <h2 id="work-title">From bare studs to finished.</h2>
+
+        <div class="ba" id="ba" role="group" aria-label="Before and after comparison of a shower remodel">
+          <img class="ba-img" src="assets/img/shower-after.jpg" width="1050" height="1400" loading="lazy"
+               alt="The shower finished in green stone-look tile with a white and green hex mosaic floor">
+          <div class="ba-before">
+            <img class="ba-img" src="assets/img/shower-before.jpg" width="1050" height="1400" loading="lazy"
+                 alt="The same shower stripped to wood lath and a glass block window, before tiling">
+          </div>
+          <span class="ba-tag ba-tag-before" aria-hidden="true">Before</span>
+          <span class="ba-tag ba-tag-after" aria-hidden="true">After</span>
+          <div class="ba-handle" id="ba-handle" role="slider" tabindex="0"
+               aria-label="Reveal before and after" aria-orientation="horizontal"
+               aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% before">
+            <span class="ba-knob" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </div>
+        <p class="ba-hint">Drag to see the shower go from bare studs to finished.</p>
+
+        <div class="grid">
+          <figure>
+            <img src="assets/img/marble-shower.jpg" width="900" height="1200" loading="lazy" alt="Shower with large-format marble-look porcelain walls and hex mosaic floor">
+          </figure>
+          <figure>
+            <img src="assets/img/hex-floor.jpg" width="1400" height="788" loading="lazy" alt="White hexagon tile floor with dark grout" class="pos-mid">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section" id="process" aria-labelledby="process-title">
+      <div class="wrap">
+        <p class="label label-oak">How it goes</p>
+        <h2 id="process-title">Prep it. Set it. Finish it.</h2>
+        <ol class="steps">
+          <li>
+            <img src="assets/img/step-prep.jpg" width="675" height="900" loading="lazy" alt="Orange waterproofing membrane laid over a prepared floor">
+            <h3>Prep</h3>
+            <p>Flat, dry, sealed. A good floor is mostly what you never see.</p>
+          </li>
+          <li>
+            <img src="assets/img/step-set.jpg" width="675" height="900" loading="lazy" alt="Combed mortar bed with a laser line ready for tile">
+            <h3>Set</h3>
+            <p>Laser-straight lines and full coverage, tile by tile.</p>
+          </li>
+          <li>
+            <img src="assets/img/step-hex.jpg" width="675" height="900" loading="lazy" alt="First sheet of white hex mosaic set against a laser line">
+            <h3>Finish</h3>
+            <p>Grout, seal, clean. Handed over spotless.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SERVICE AREA -->
+    <section class="section section-tint area" id="area" aria-labelledby="area-title">
+      <div class="wrap area-grid">
+        <div class="area-copy">
+          <p class="label label-oak">Service area</p>
+          <h2 id="area-title">Proudly serving the Twin&nbsp;Cities.</h2>
+          <p>Minneapolis, St. Paul and the surrounding suburbs. If you are not sure we reach you, just ask.</p>        </div>
+        <figure class="map" id="map">
+          <svg viewBox="0 0 250 270" role="img" aria-labelledby="map-title map-desc">
+            <title id="map-title">Wireframe map of Minnesota</title>
+            <desc id="map-desc">Outline of Minnesota with the Twin Cities metro area marked near the southeast.</desc>
+            <defs>
+              <clipPath id="mn-clip"><path d="M17.6 30 L76.5 30 L76.5 14.8 L85.8 17.2 L90.9 41.2 L114.6 49.2 L137.3 45.2 L165.5 58 L182.5 67.2 L199.5 62 L233.4 70 L210.8 82 L182.5 106 L162.7 118.8 L157.1 123.6 L157.1 146 L144.3 168 L142.9 200 L165.5 214 L176.9 236 L187.6 250 L39.7 250 L39.7 178 L36.6 174 L28.4 150 L29.8 126 L19.9 90 L18.5 38 Z"/></clipPath>
+            </defs>
+            <g clip-path="url(#mn-clip)" class="map-grid">
+              <path d="M24.1 0V270 M52.4 0V270 M80.7 0V270 M109 0V270 M137.3 0V270 M165.5 0V270 M193.8 0V270 M222.1 0V270 M0 230H250 M0 190H250 M0 150H250 M0 110H250 M0 70H250 M0 30H250"/>
+            </g>
+            <path class="map-outline" pathLength="1" d="M17.6 30 L76.5 30 L76.5 14.8 L85.8 17.2 L90.9 41.2 L114.6 49.2 L137.3 45.2 L165.5 58 L182.5 67.2 L199.5 62 L233.4 70 L210.8 82 L182.5 106 L162.7 118.8 L157.1 123.6 L157.1 146 L144.3 168 L142.9 200 L165.5 214 L176.9 236 L187.6 250 L39.7 250 L39.7 178 L36.6 174 L28.4 150 L29.8 126 L19.9 90 L18.5 38 Z"/>
+            <g class="map-pin">
+              <circle class="map-range" cx="132" cy="191" r="30"/>
+              <circle class="map-pulse" cx="132" cy="191" r="6"/>
+              <circle class="map-dot" cx="132" cy="191" r="4"/>
+              <path class="map-leader" d="M132 191 L190 150 H226"/>
+              <text class="map-label" x="190" y="143">Twin Cities</text>
+            </g>
+          </svg>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ESTIMATE -->
+    <section class="estimate" id="estimate" aria-labelledby="estimate-title">
+      <div class="wrap estimate-grid">
+        <div class="estimate-copy">
+          <p class="label label-gold">Free estimates</p>
+          <h2 id="estimate-title">Tell us about your floor.</h2>
+          <p>Send a few details and we will get back to you. Prefer to talk?</p>
+          <a class="big-phone" data-phone href="tel:">Call</a>
+          <p class="fine" data-email-line></p>
+        </div>
+
+        <form class="form" id="estimate-form" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+          </div>
+          <div class="field">
+            <label for="email">Email <span class="opt">(optional)</span></label>
+            <input id="email" name="email" type="email" autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="type">Project</label>
+            <select id="type" name="type" required>
+              <option value="" selected disabled>Choose one</option>
+              <option>Vinyl or laminate plank</option>
+              <option>Hardwood</option>
+              <option>Tile floor</option>
+              <option>Shower or bath tile</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field field-wide">
+            <label for="message">Details <span class="opt">(optional)</span></label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+          <div class="field-wide form-foot">
+            <button class="btn btn-gold" type="submit">Send request</button>
+            <p class="status" id="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <img src="assets/brand/monogram-reversed.svg" alt="G&E Flooring" width="64" height="35">
+      <p>&copy; <span id="year"></span> G&amp;E Flooring. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/boards.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
