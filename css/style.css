@@ -330,39 +330,3 @@ h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.25; }
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
   .js .reveal { opacity: 1; transform: none; }
 }
-
-/* Floor installation: planks lay down on the left and tile sets in on the right as you scroll
-   onto the founders. main.js builds the pieces and sets --fp (0..1) on the section. */
-.founders .floor {
-  position: absolute; top: 0; bottom: 0; z-index: 0; overflow: hidden; pointer-events: none;
-  width: var(--gap, 0px);
-}
-.floor-left  { left: 0;  --dir: -1; -webkit-mask-image: linear-gradient(to right, #000 62%, transparent), linear-gradient(to bottom, transparent, #000 14%, #000 82%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, #000 62%, transparent), linear-gradient(to bottom, transparent, #000 14%, #000 82%, transparent); mask-composite: intersect; }
-.floor-right { right: 0; --dir: 1;  -webkit-mask-image: linear-gradient(to left, #000 62%, transparent), linear-gradient(to bottom, transparent, #000 14%, #000 82%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to left, #000 62%, transparent), linear-gradient(to bottom, transparent, #000 14%, #000 82%, transparent); mask-composite: intersect; }
-.fp, .ft { position: absolute; }
-/* Planks drop in from above and slide along the row into place, with a slight twist that settles flat. */
-.fp {
-  --a: clamp(0, calc((var(--fp, 0) - var(--t)) * 12), 1);
-  background-size: cover; background-repeat: no-repeat;
-  opacity: var(--a);
-  transform: translate(calc((1 - var(--a)) * var(--dir) * 80px), calc((1 - var(--a)) * -18px)) rotate(calc((1 - var(--a)) * var(--rot) * 1deg));
-  box-shadow: inset 0 0 0 1px rgba(34,30,26,.14), inset 0 -12px 14px -12px rgba(34,30,26,.22), 0 calc(var(--a) * 2px) 4px rgba(34,30,26,.12);
-}
-/* Tile: the mortar bed (trowel lines) appears just ahead of the tile, which then lowers onto it. */
-.ft {
-  --m: clamp(0, calc((var(--fp, 0) - var(--t) + 0.05) * 14), 1);
-  --a: clamp(0, calc((var(--fp, 0) - var(--t)) * 12), 1);
-  opacity: var(--m);
-  background: repeating-linear-gradient(90deg, #d8ccb4 0 3px, #c4b595 3px 6px);
-}
-.ft::after {
-  content: ""; position: absolute; inset: 0;
-  background-image: var(--img); background-size: cover; background-position: var(--bp);
-  opacity: var(--a);
-  transform: translateY(calc((1 - var(--a)) * -26px)) scale(calc(1.1 - .1 * var(--a)));
-  box-shadow: inset 0 0 0 1px rgba(34,30,26,.1), 0 calc(var(--a) * 2px) 4px rgba(34,30,26,.14);
-}
-/* Faint chalk lines on the empty subfloor so the rows read before anything is laid */
-.floor-left { background-image: repeating-linear-gradient(0deg, rgba(176,132,64,.14) 0 1px, transparent 1px 52px); }.founders > .wrap { z-index: 1; }
-@media (max-width: 899px) { .founders .floor { display: none; } }
-@media (prefers-reduced-motion: reduce) { .fp { opacity: 1; transform: none; } .ft { opacity: 1; } .ft::after { opacity: 1; transform: none; } }
