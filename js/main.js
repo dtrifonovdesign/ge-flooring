@@ -18,7 +18,7 @@
     emailLine.appendChild(ea);
   }
   if (/000-0000|example\.com/.test((cfg.phone || '') + (cfg.email || ''))) {
-    console.warn('G&E Tile & Flooring: update js/config.js with the real phone and email before publishing.');
+    console.warn('G&E Tile and Flooring: update js/config.js with the real phone and email before publishing.');
   }
 
   document.getElementById('year').textContent = new Date().getFullYear();

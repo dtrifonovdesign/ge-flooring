@@ -16,7 +16,8 @@
   if (!window.THREE) return fallback();
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var coarse = window.matchMedia('(pointer: coarse)').matches;
+  // `?touch` in the address forces phone mode on a desktop, for testing.
+  var coarse = window.matchMedia('(pointer: coarse)').matches || /[?&]touch\b/.test(location.search);
 
   var renderer;
   try {
@@ -176,11 +177,44 @@
     if (tip && !coarse && e.pointerType === 'mouse') { tip.style.left = (e.clientX - r.left) + 'px'; tip.style.top = (e.clientY - r.top) + 'px'; }
     if (hint && !hint.classList.contains('gone')) hint.classList.add('gone');
   }
-  if (!reduce) {
+  if (!reduce && !coarse) {
     hero.addEventListener('pointermove', setPointer, { passive: true });
     hero.addEventListener('pointerdown', setPointer, { passive: true });
     hero.addEventListener('pointerleave', function () { pointerNDC = null; setHover(null); lastMove = performance.now() - 2000; }, { passive: true });
   }
+  // ---------- phone tilt ----------
+  var tilt = { x: 0, y: 0 };
+  var baseBeta = null;
+  function onTilt(e) {
+    if (e.gamma == null || e.beta == null) return;
+    if (baseBeta === null) baseBeta = e.beta;           // however the phone is first held counts as neutral
+    tilt.x = clamp(e.gamma / 28, -1, 1);
+    tilt.y = clamp(-(e.beta - baseBeta) / 28, -1, 1);
+    tiltActive = true;
+    setHintText('Tilt your phone or scroll');
+  }
+  var tiltActive = false;
+  function setHintText(t) { var el = hint && hint.querySelector('.hint-text'); if (el && el.textContent !== t) el.textContent = t; }
+  function setupTilt() {
+    if (!coarse || reduce || !('DeviceOrientationEvent' in window)) return;
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      // iOS asks for permission, and only from a tap.
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'tilt-btn'; b.textContent = 'Enable tilt';
+      b.addEventListener('click', function () {
+        DeviceOrientationEvent.requestPermission().then(function (s) {
+          if (s === 'granted') window.addEventListener('deviceorientation', onTilt);
+        }).catch(function () {}).then(function () { b.remove(); });
+      });
+      hero.appendChild(b);
+    } else {
+      window.addEventListener('deviceorientation', onTilt);
+    }
+  }
+  if (coarse && hint) {
+    window.addEventListener('scroll', function () { if (window.scrollY > 40) hint.classList.add('gone'); }, { passive: true });
+  }
+
   function setHover(p) {
     if (hovered === p) return;
     hovered = p;
@@ -196,8 +230,13 @@
     var now = performance.now();
     var idle = now - lastMove > 3000;
 
-    if (idle) {
-      // Wander gently so the scene is alive on touch screens and when the mouse rests.
+    if (coarse) {
+      // Phones: no touch tracking. The boards shift with device tilt and drift as you scroll.
+      var sp = window.scrollY / Math.max(H, 1);
+      pt.x = clamp(tilt.x + Math.sin(sp * 2.4) * 0.5, -1, 1);
+      pt.y = clamp(tilt.y + Math.cos(sp * 1.8) * 0.3 - sp * 0.15, -1, 1);
+    } else if (idle) {
+      // Wander gently when the mouse rests.
       pt.x = Math.sin(tAll * 0.35) * 0.6;
       pt.y = Math.cos(tAll * 0.27) * 0.4;
     }
@@ -220,18 +259,19 @@
       var p = pieces[i], m = p.mesh, z = p.base.z;
       var hh = (14 - z) * TAN, hw = hh * aspect;
       var bob = Math.sin(tAll * 0.6 + p.phase) * 0.12;
-      var px = p.base.x + pm.x * 0.8 * p.df;
-      var py = p.base.y + pm.y * 0.55 * p.df + bob;
+      var amp = coarse ? 1.7 : 1;
+      var px = p.base.x + pm.x * 0.8 * amp * p.df;
+      var py = p.base.y + pm.y * 0.55 * amp * p.df + bob;
       var dx = pm.x * hw - px, dy = pm.y * hh - py;
       var sig = 2.6 * p.size;
-      var infl = Math.exp(-(dx * dx + dy * dy) / (2 * sig * sig));
+      var infl = coarse ? 0 : Math.exp(-(dx * dx + dy * dy) / (2 * sig * sig));
       p.hover += ((p === hovered ? 1 : 0) - p.hover) * k;
 
       var tx = px + dx * 0.07 * infl;
       var ty = py + dy * 0.07 * infl;
       var tz = z + infl * 1.0 + p.hover * 0.7;
-      var trx = p.rx - dy * 0.2 * infl - pm.y * 0.18 * p.df + Math.cos(tAll * 0.45 + p.phase) * 0.05;
-      var try_ = p.ry + dx * 0.22 * infl + pm.x * 0.22 * p.df + Math.sin(tAll * 0.4 + p.phase) * 0.08;
+      var trx = p.rx - dy * 0.2 * infl - pm.y * 0.18 * amp * p.df + Math.cos(tAll * 0.45 + p.phase) * 0.05;
+      var try_ = p.ry + dx * 0.22 * infl + pm.x * 0.22 * amp * p.df + Math.sin(tAll * 0.4 + p.phase) * 0.08;
       var trz = p.rz + infl * 0.3 * (p.phase > Math.PI ? 1 : -1) + Math.sin(tAll * 0.3 + p.phase) * 0.04;
 
       m.position.x += (tx - m.position.x) * k;
@@ -262,8 +302,9 @@
     hero.classList.add('ready');
     if (hint) {
       if (reduce) hint.style.display = 'none';
-      else if (coarse) hint.querySelector('.hint-text').textContent = 'Drag to move the boards';
+      else if (coarse) setHintText('Scroll to move the boards');
     }
+    setupTilt();
     if (reduce) renderOnce();
     else {
       if ('IntersectionObserver' in window) {
