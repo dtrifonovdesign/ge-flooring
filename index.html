@@ -28,9 +28,10 @@
   </header>
 
   <main id="main">
-    <!-- HERO: the floating boards live in the canvas -->
+    <!-- STAGE: one sticky canvas of floating boards sits behind the hero and the founders -->
+    <div class="stage" id="stage">
+    <div class="stage-bg" aria-hidden="true"><canvas id="boards"></canvas></div>
     <section class="hero" aria-labelledby="hero-title">
-      <canvas id="boards" aria-hidden="true"></canvas>
       <div class="hero-fallback" aria-hidden="true">
         <img src="assets/tex/wood-honey.jpg" alt="">
         <img src="assets/tex/tile-marble.jpg" alt="">
@@ -51,6 +52,24 @@
       <p class="hint" id="hint" aria-hidden="true"><span class="hint-dot"></span><span class="hint-text">Move your cursor. The boards follow.</span></p>
       <div class="tip" id="tip" aria-hidden="true"></div>
     </section>
+
+    <!-- FOUNDERS -->
+    <section class="section founders" id="founders" aria-labelledby="founders-title">
+      <div class="wrap">
+        <h2 id="founders-title" class="sr-only">Founders</h2>
+        <figure class="founders-photo">
+          <div class="founders-frame">
+            <img src="assets/img/founders.webp" width="733" height="1267" loading="lazy"
+                 alt="Eli on the left and Greg on the right, the founders of G&amp;E Tile and Flooring, standing side by side with arms crossed">
+          </div>
+          <figcaption>
+            <span class="who who-eli">Eli</span>
+            <span class="who who-greg">Greg</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+    </div>
 
     <!-- SERVICES -->
     <section class="section" id="services" aria-labelledby="services-title">
@@ -133,22 +152,6 @@
       </div>
     </section>
 
-    <!-- FOUNDERS -->
-    <section class="section founders" id="founders" aria-labelledby="founders-title">
-      <div class="wrap">
-        <h2 id="founders-title" class="sr-only">Founders</h2>
-        <figure class="founders-photo">
-          <div class="founders-frame">
-            <img src="assets/img/founders.webp" width="733" height="1267" loading="lazy"
-                 alt="Eli on the left and Greg on the right, the founders of G&amp;E Tile and Flooring, standing side by side with arms crossed">
-          </div>
-          <figcaption>
-            <span class="who who-eli">Eli</span>
-            <span class="who who-greg">Greg</span>
-          </figcaption>
-        </figure>
-      </div>
-    </section>
     <!-- SERVICE AREA -->
     <section class="section section-tint area" id="area" aria-labelledby="area-title">
       <div class="wrap area-grid">

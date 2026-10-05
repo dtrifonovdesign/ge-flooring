@@ -8,7 +8,7 @@
 
   var canvas = document.getElementById('boards');
   if (!canvas) return;
-  var hero = canvas.closest('.hero');
+  var hero = canvas.closest('.stage');   // hero + founders share one canvas
   var tip = document.getElementById('tip');
   var hint = document.getElementById('hint');
 
@@ -95,7 +95,7 @@
   }
 
   function build() {
-    var count = coarse || window.innerWidth < 700 ? 13 : 24;
+    var count = coarse || window.innerWidth < 700 ? 15 : 28;
     for (var i = 0; i < count; i++) {
       var d = DEFS[i % DEFS.length];
       var geo = new THREE.BoxGeometry(d.w, d.h, d.t);
@@ -130,7 +130,7 @@
       for (var n = 0; n < 80; n++) {
         var z = rand(-4.5, 2.4);
         var hh = (14 - z) * TAN, hw = hh * aspect;
-        var nx = rand(-1.05, 1.05), ny = rand(-1.0, 1.0);
+        var nx = rand(-1.05, 1.05), ny = rand(-1.45, 1.0);   // extra room below: scrolling lifts boards up into view behind the founders
         var blocked = portrait
           ? Math.abs(ny) < 0.40
           : (nx / 0.64) * (nx / 0.64) + (ny / 0.58) * (ny / 0.58) < 1;
@@ -154,7 +154,7 @@
 
   // ---------- size ----------
   function resize() {
-    W = hero.clientWidth; H = hero.clientHeight;
+    W = canvas.clientWidth; H = canvas.clientHeight;
     renderer.setSize(W, H, false);
     var a = W / H;
     var rebucket = (a < 0.9) !== (aspect < 0.9) || Math.abs(a - aspect) > 0.25;
@@ -169,12 +169,13 @@
 
   // ---------- pointer ----------
   function setPointer(e) {
-    var r = hero.getBoundingClientRect();
+    var r = canvas.getBoundingClientRect();
     pt.x = clamp(((e.clientX - r.left) / r.width) * 2 - 1, -1, 1);
     pt.y = clamp(-(((e.clientY - r.top) / r.height) * 2 - 1), -1, 1);
-    pointerNDC = new THREE.Vector2(pt.x, pt.y);
+    var onContent = !!(e.target.closest && e.target.closest('.hero-copy, .founders-photo, .btn, a, header'));
+    pointerNDC = onContent ? null : new THREE.Vector2(pt.x, pt.y);   // no hover labels under the headline or photo
     lastMove = performance.now();
-    if (tip && !coarse && e.pointerType === 'mouse') { tip.style.left = (e.clientX - r.left) + 'px'; tip.style.top = (e.clientY - r.top) + 'px'; }
+    if (tip && !coarse && e.pointerType === 'mouse') { tip.style.left = e.clientX + 'px'; tip.style.top = e.clientY + 'px'; }
     if (hint && !hint.classList.contains('gone')) hint.classList.add('gone');
   }
   if (!reduce && !coarse) {
@@ -218,7 +219,10 @@
 
     group.rotation.y = pm.x * 0.1;
     group.rotation.x = -pm.y * 0.07;
-    group.position.y = (window.scrollY / Math.max(H, 1)) * 1.6;
+    group.position.y = (window.scrollY / Math.max(H, 1)) * 1.1;
+    // As the founders scroll into view, boards drift in toward the middle so they float right behind them.
+    var sprog = clamp(window.scrollY / Math.max(H * 0.9, 1), 0, 1);
+    var pull = sprog * sprog * (3 - 2 * sprog) * 0.6;
 
     if (pointerNDC && !idle && !coarse) {
       raycaster.setFromCamera(pointerNDC, camera);
@@ -232,7 +236,7 @@
       var hh = (14 - z) * TAN, hw = hh * aspect;
       var bob = Math.sin(tAll * 0.6 + p.phase) * 0.12;
       var amp = coarse ? 1.7 : 1;
-      var px = p.base.x + pm.x * 0.8 * amp * p.df;
+      var px = p.base.x * (1 - pull) + pm.x * 0.8 * amp * p.df;
       var py = p.base.y + pm.y * 0.55 * amp * p.df + bob;
       var dx = pm.x * hw - px, dy = pm.y * hh - py;
       var sig = 2.6 * p.size;
@@ -267,7 +271,7 @@
 
   // ---------- boot ----------
   resize();
-  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(hero); else window.addEventListener('resize', resize);
+  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas); else window.addEventListener('resize', resize);
 
   loadTextures(function () {
     build();
