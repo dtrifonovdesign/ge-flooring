@@ -140,9 +140,16 @@
 
     if (cfg.formEndpoint) {
       btn.disabled = true; status.textContent = 'Sending…';
+      data.append('_subject', 'Free estimate request from ' + obj.name);
+      data.append('_template', 'table');
+      data.append('_captcha', 'false');
       fetch(cfg.formEndpoint, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data })
-        .then(function (r) { if (!r.ok) throw new Error(r.status); form.reset(); status.className = 'status ok'; status.textContent = 'Thank you. We will be in touch soon.'; })
-        .catch(function () { status.textContent = 'That did not go through. Please call us or try again.'; })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (j) {
+          if (j && String(j.success) === 'false') throw new Error(j.message || 'rejected');
+          form.reset(); status.className = 'status ok'; status.textContent = 'Thank you. We will be in touch soon.';
+        })
+        .catch(function () { status.textContent = 'That did not go through. Please call ' + cfg.phone + ' or email ' + cfg.email + '.'; })
         .then(function () { btn.disabled = false; });
     } else {
       var body = ['Name: ' + obj.name, 'Phone: ' + obj.phone, obj.email ? 'Email: ' + obj.email : '', 'Project: ' + obj.type, '', obj.message || '']

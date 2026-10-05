@@ -6,5 +6,5 @@ window.GE_CONFIG = {
   email: 'gregsflooring@gmail.com',
   // Optional: a Formspree (or similar) URL, e.g. 'https://formspree.io/f/xxxxxxx'.
   // Leave empty to open the visitor's email app instead.
-  formEndpoint: ''
+  formEndpoint: 'https://formsubmit.co/ajax/gregsflooring@gmail.com'
 };
