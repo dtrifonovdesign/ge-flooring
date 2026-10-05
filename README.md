@@ -12,7 +12,7 @@ Edit **`js/config.js`**:
 | `email` | Where the estimate form emails if no endpoint is set. |
 | `formEndpoint` | Optional. A [Formspree](https://formspree.io) URL makes the form submit in the background. Leave empty to open the visitor's email app. |
 
-Currently set to `(303) 875-6521` and `gregsfloorings@gmail.com`.
+Currently set to `(612) 324-9962` and `gregsfloorings@gmail.com`.
 
 ## Run locally
 

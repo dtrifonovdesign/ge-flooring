@@ -30,7 +30,7 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 
   // Reveal on scroll
-  var items = document.querySelectorAll('.section h2, .section .label, .services li, .ba, .grid figure, .steps li, .area-copy > p, .area-copy .btn, .map, .estimate-copy, .form');
+  var items = document.querySelectorAll('.section h2, .section .label, .services li, .ba, .grid figure, .steps li, .founders-photo, .founders-copy > *, .area-copy > p, .area-copy .btn, .map, .estimate-copy, .form');
   items.forEach(function (el) { el.classList.add('reveal'); });
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
