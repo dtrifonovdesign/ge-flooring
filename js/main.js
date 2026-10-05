@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   'use strict';
   var cfg = window.GE_CONFIG || {};
   var digits = String(cfg.phone || '').replace(/[^\d+]/g, '');
@@ -18,7 +18,7 @@
     emailLine.appendChild(ea);
   }
   if (/000-0000|example\.com/.test((cfg.phone || '') + (cfg.email || ''))) {
-    console.warn('G&E Flooring: update js/config.js with the real phone and email before publishing.');
+    console.warn('G&E Tile & Flooring: update js/config.js with the real phone and email before publishing.');
   }
 
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -139,7 +139,7 @@
     var obj = {}; data.forEach(function (v, k) { obj[k] = v; });
 
     if (cfg.formEndpoint) {
-      btn.disabled = true; status.textContent = 'Sending…';
+      btn.disabled = true; status.textContent = 'Sendingâ€¦';
       data.append('_subject', 'Free estimate request from ' + obj.name);
       data.append('_template', 'table');
       data.append('_captcha', 'false');

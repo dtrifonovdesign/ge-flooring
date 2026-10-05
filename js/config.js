@@ -1,4 +1,4 @@
-﻿/* G&E Flooring: edit these three values before you publish. */
+﻿/* G&E Tile & Flooring: edit these three values before you publish. */
 window.GE_CONFIG = {
   // Shown on the page. The tel: link uses only the digits.
   phone: '(303) 875-6521',

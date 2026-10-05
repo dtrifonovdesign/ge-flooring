@@ -1,4 +1,4 @@
-﻿# G&E Flooring website
+﻿# G&E Tile & Flooring website
 
 A static, build-free site. The hero is a three.js scene of floating flooring boards that lean toward the cursor (drag on touch screens). Textures are cropped from the company's own job photos.
 
