@@ -39,6 +39,39 @@
     items.forEach(function (el) { io.observe(el); });
   } else items.forEach(function (el) { el.classList.add('in'); });
 
+  // Founders: layered depth. The backdrop, outline and photo drift at different speeds with the
+  // cursor (desktop) and with scroll (everywhere). Faces are never warped, only the layers shift.
+  (function () {
+    var frame = document.getElementById('founders-frame');
+    if (!frame || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var tx = 0, ty = 0, x = 0, y = 0, onScreen = false, raf = 0, last = 0;
+    function clamp(v) { return Math.max(-1, Math.min(1, v)); }
+    if (fine) {
+      window.addEventListener('pointermove', function (e) {
+        var r = frame.getBoundingClientRect();
+        tx = clamp((e.clientX - (r.left + r.width / 2)) / (window.innerWidth / 2));
+        ty = clamp((e.clientY - (r.top + r.height / 2)) / (window.innerHeight / 2));
+      }, { passive: true });
+    }
+    function tick(now) {
+      raf = onScreen ? requestAnimationFrame(tick) : 0;
+      var k = 1 - Math.exp(-((now - last) / 1000 || 0.016) * 5); last = now;
+      x += (tx - x) * k; y += (ty - y) * k;
+      var r = frame.getBoundingClientRect();
+      var sy = clamp((r.top + r.height / 2 - window.innerHeight / 2) / (window.innerHeight / 2));
+      frame.style.setProperty('--px', x.toFixed(3));
+      frame.style.setProperty('--py', y.toFixed(3));
+      frame.style.setProperty('--sy', sy.toFixed(3));
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        onScreen = es[0].isIntersecting;
+        if (onScreen && !raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+      }, { rootMargin: '100px' }).observe(frame);
+    }
+  })();
+
   // Before / after slider
   (function () {
     var ba = document.getElementById('ba');
