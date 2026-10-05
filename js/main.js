@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict';
   var cfg = window.GE_CONFIG || {};
   var digits = String(cfg.phone || '').replace(/[^\d+]/g, '');
@@ -70,6 +70,75 @@
         if (onScreen && !raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
       }, { rootMargin: '100px' }).observe(frame);
     }
+  })();
+
+  // Founders: the empty sides turn into a floor as you scroll. Planks (wood and vinyl) lay down
+  // row by row on the left, tile sets in on the right. Pieces are CSS-driven from one variable, --fp.
+  (function () {
+    var section = document.getElementById('founders');
+    if (!section) return;
+    var left = section.querySelector('.floor-left'), right = section.querySelector('.floor-right');
+    var frame = document.getElementById('founders-frame');
+    if (!left || !right || !frame) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var PLANKS = ['wood-honey', 'wood-honey', 'vinyl-oak', 'vinyl-oak', 'vinyl-amber', 'vinyl-grey', 'vinyl-teal'];
+    var TILES = ['tile-marble', 'tile-marble', 'tile-marble', 'tile-grey', 'tile-grey', 'tile-green', 'tile-green', 'tile-hex', 'tile-hex', 'tile-flower', 'tile-quarry'];
+    var built = '';
+
+    function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    function tex(n) { return 'url(' + new URL('assets/tex/' + n + '.jpg', document.baseURI).href + ')'; }   // absolute, so it also resolves inside CSS variables
+    function el(cls, css) { var d = document.createElement('div'); d.className = cls; d.style.cssText = css; return d; }
+
+    function build() {
+      var sw = section.clientWidth, sh = section.offsetHeight;
+      var gap = Math.floor((sw - frame.offsetWidth) / 2) - 36;
+      var key = sw + 'x' + sh;
+      if (key === built) return;
+      built = key;
+      left.innerHTML = ''; right.innerHTML = '';
+      if (gap < 140) { section.style.setProperty('--gap', '0px'); return; }
+      section.style.setProperty('--gap', gap + 'px');
+      var rand = rng(7), ROW = 52, rows = Math.ceil(sh / ROW) + 1;
+
+      // Planks (left): laid one at a time, a row at a time from the bottom, working inward.
+      var planks = [];
+      for (var r = 0; r < rows; r++) {
+        var x = -Math.floor(rand() * 150), top = sh - (r + 1) * ROW;
+        while (x < gap + 10) {
+          var len = 150 + Math.floor(rand() * 100);
+          planks.push({ x: x, top: top, len: len });
+          x += len;
+        }
+      }
+      planks.forEach(function (p, n) {
+        var t = 0.86 * n / Math.max(1, planks.length - 1);
+        var rot = (rand() * 3 - 1.5).toFixed(2);
+        var bp = Math.floor(rand() * 100) + '% ' + Math.floor(rand() * 100) + '%';
+        left.appendChild(el('fp', 'left:' + p.x + 'px;top:' + p.top + 'px;width:' + (p.len - 2) + 'px;height:' + (ROW - 2) + 'px;--t:' + t.toFixed(4) + ';--rot:' + rot + ';background-image:' + tex(PLANKS[Math.floor(rand() * PLANKS.length)]) + ';background-position:' + bp));
+      });
+
+      // Tile (right): a mortar bed with trowel lines goes down first, then each tile lowers onto it.
+      var T = 74, cols = Math.ceil(gap / T) + 1, trows = Math.ceil(sh / T) + 1, count = cols * trows, n2 = 0;
+      for (var rr = 0; rr < trows; rr++) {
+        for (var c = 0; c < cols; c++) {
+          var tt = 0.04 + 0.82 * n2++ / Math.max(1, count - 1);
+          right.appendChild(el('ft', 'right:' + (c * T - 6) + 'px;top:' + (sh - (rr + 1) * T) + 'px;width:' + (T - 4) + 'px;height:' + (T - 4) + 'px;--t:' + tt.toFixed(4) + ';--img:' + tex(TILES[Math.floor(rand() * TILES.length)]) + ';--bp:' + Math.floor(rand() * 100) + '% ' + Math.floor(rand() * 100) + '%'));
+        }
+      }
+    }
+    function update() {
+      var r = section.getBoundingClientRect(), vh = window.innerHeight;
+      var p = reduce ? 1 : Math.max(0, Math.min(1, (vh * 0.92 - r.top) / (vh * 0.8)));
+      section.style.setProperty('--fp', p.toFixed(3));
+    }
+    var ticking = false;
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; update(); }); } }
+    var rt;
+    function onResize() { clearTimeout(rt); rt = setTimeout(function () { build(); update(); }, 150); }
+    build(); update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    window.addEventListener('load', function () { built = ''; build(); update(); });
   })();
 
   // Before / after slider
