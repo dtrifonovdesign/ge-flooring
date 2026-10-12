@@ -1,3 +1,9 @@
+/* Jost, hosted with the site (no Google Fonts request) */
+@font-face {
+  font-family: 'Jost'; font-style: normal; font-weight: 400 600; font-display: swap;
+  src: url('../assets/fonts/jost-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 /* G&E Flooring: tokens from the brand guidelines (Oak Gold, Light Gold, Charcoal, Cream; Jost) */
 :root {
   --cream: #F6F2EA;
@@ -5,7 +11,7 @@
   --charcoal: #221E1A;
   --ink-soft: #5A5046;
   --oak: #B08440;
-  --oak-text: #8A6A3A;
+  --oak-text: #7A5C2E;   /* 5.5:1 on cream, for small gold text */
   --gold: #C9A158;
   --line: #DDD4C5;
 
@@ -291,7 +297,7 @@ h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.25; }
 .field input, .field select, .field textarea {
   width: 100%; min-height: 52px; padding: 12px 14px;
   background: transparent; color: var(--cream);
-  border: 1.5px solid #6A5E52; border-radius: 2px;
+  border: 1.5px solid #9C8F7E; border-radius: 2px;
   font: 400 1rem/1.4 var(--font);
   transition: border-color .2s var(--ease), background .2s var(--ease);
 }
@@ -329,4 +335,32 @@ h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.25; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
   .js .reveal { opacity: 1; transform: none; }
+}
+
+/* Footer details, form note, legal pages */
+.footer-info { display: grid; gap: 6px; max-width: 46ch; }
+.footer-info a, .privacy-note a { color: var(--cream); text-underline-offset: 3px; }
+.footer-info a { display: inline-block; padding: 8px 0; }   /* comfortable tap height */
+.privacy-note { margin-top: -4px; color: #D8CFC0; }
+
+.site-header.solid { position: sticky; background: rgba(246,242,234,.96); box-shadow: 0 1px 0 var(--line); }
+.legal { padding: clamp(40px, 7vw, 96px) 0 clamp(72px, 10vw, 128px); }
+.legal .wrap { max-width: 760px; }
+.legal h1 { font-size: clamp(2rem, 5vw, 3.25rem); margin-top: 14px; letter-spacing: -.015em; }
+.legal h2 { font-size: 1.375rem; max-width: none; margin-top: 40px; letter-spacing: 0; }
+.legal p, .legal li { color: var(--ink-soft); margin-top: 12px; }
+.legal ul { list-style: disc; padding-left: 1.25em; }
+.legal a { color: var(--charcoal); text-underline-offset: 3px; }
+.legal .meta { color: var(--ink-soft); margin-top: 8px; font-size: .9375rem; }
+.notfound { min-height: 70vh; display: grid; place-items: center; text-align: center; padding: 96px var(--gutter); }
+.notfound h1 { font-size: clamp(2.5rem, 7vw, 5rem); margin-top: 14px; }
+.notfound p:not(.label) { color: var(--ink-soft); max-width: 36ch; margin: 16px auto 0; }
+.notfound .cta-row { margin-top: 28px; }
+
+/* High-contrast / forced-colors mode: keep controls and the slider handle visible */
+@media (forced-colors: active) {
+  .btn, .field input, .field select, .field textarea { border: 2px solid ButtonText; }
+  .ba-knob { border: 2px solid ButtonText; }
+  .ba-handle::before { background: ButtonText; }
+  .founders-frame, .arch { forced-color-adjust: none; }
 }

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict';
   var cfg = window.GE_CONFIG || {};
   var digits = String(cfg.phone || '').replace(/[^\d+]/g, '');
@@ -21,6 +21,8 @@
     console.warn('G&E Tile and Flooring: update js/config.js with the real phone and email before publishing.');
   }
 
+  document.querySelectorAll('[data-phone-text]').forEach(function (a) { a.textContent = cfg.phone; a.setAttribute('href', 'tel:' + digits); });
+  document.querySelectorAll('[data-email-text]').forEach(function (a) { a.textContent = cfg.email; a.setAttribute('href', 'mailto:' + cfg.email); });
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // Header solidifies after the hero

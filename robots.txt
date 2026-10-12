@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dtrifonovdesign.github.io/ge-flooring/sitemap.xml

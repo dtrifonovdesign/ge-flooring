@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found | G&amp;E Tile and Flooring</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#F6F2EA">
+  <!-- This page can be served from any folder depth, so point relative links at the site root first.
+       On a github.io project site the root is /repo-name/; on a custom domain it is /. -->
+  <script>
+    (function () {
+      var seg = location.hostname.slice(-10) === '.github.io' ? location.pathname.split('/')[1] : '';
+      document.write('<base href="' + (seg ? '/' + seg + '/' : '/') + '">');
+    })();
+  </script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header solid">
+    <a class="brand" href="./" aria-label="G&amp;E Tile and Flooring, home">
+      <img src="assets/brand/logo-horizontal.svg" alt="G&amp;E Tile and Flooring" width="200" height="51">
+    </a>
+  </header>
+
+  <main id="main" class="notfound">
+    <div>
+      <p class="label label-oak">Error 404</p>
+      <h1>This page isn&rsquo;t laid yet.</h1>
+      <p>The page you are looking for does not exist or has moved. Head back to the main page, or give us a call.</p>
+      <div class="cta-row">
+        <a class="btn" href="./">Back to home</a>
+        <a class="btn btn-ghost" data-phone href="tel:6123249962">Call (612) 324-9962</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <img src="assets/brand/logo-horizontal-reversed.svg" alt="G&amp;E Tile and Flooring" width="200" height="51">
+      <div class="footer-info">
+        <p>&copy; <span id="year"></span> G&amp;E Tile and Flooring. All rights reserved.</p>
+        <p><a href="privacy.html">Privacy policy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/legal.js"></script>
+</body>
+</html>

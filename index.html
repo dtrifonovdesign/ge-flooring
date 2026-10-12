@@ -6,11 +6,40 @@
   <title>G&amp;E Tile and Flooring | Twin Cities</title>
   <meta name="description" content="G&amp;E Tile and Flooring: professional installation and refinishing of hardwood, vinyl, laminate and tile for homes and businesses in Minneapolis, St. Paul and the Twin Cities. Free estimates.">
   <meta name="theme-color" content="#F6F2EA">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="canonical" href="https://dtrifonovdesign.github.io/ge-flooring/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="G&amp;E Tile and Flooring">
+  <meta property="og:title" content="G&amp;E Tile and Flooring | Twin Cities">
+  <meta property="og:description" content="Professional installation and refinishing of vinyl plank, hardwood and tile for homes and businesses in the Twin Cities. Free estimates.">
+  <meta property="og:url" content="https://dtrifonovdesign.github.io/ge-flooring/">
+  <meta property="og:image" content="https://dtrifonovdesign.github.io/ge-flooring/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="G&amp;E Tile and Flooring: tile and flooring in the Twin Cities">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="assets/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "G&E Tile and Flooring",
+    "url": "https://dtrifonovdesign.github.io/ge-flooring/",
+    "image": "https://dtrifonovdesign.github.io/ge-flooring/assets/img/og.jpg",
+    "logo": "https://dtrifonovdesign.github.io/ge-flooring/assets/brand/monogram.svg",
+    "description": "Professional installation and refinishing of vinyl plank, hardwood and tile for homes and businesses.",
+    "telephone": "+1-612-324-9962",
+    "email": "gregsfloorings@gmail.com",
+    "areaServed": [
+      { "@type": "City", "name": "Minneapolis" },
+      { "@type": "City", "name": "Saint Paul" },
+      { "@type": "AdministrativeArea", "name": "Twin Cities metro, Minnesota" }
+    ]
+  }
+  </script>
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -223,8 +252,9 @@
             <label for="message">Details <span class="opt">(optional)</span></label>
             <textarea id="message" name="message" rows="4"></textarea>
           </div>
+          <p class="field-wide fine privacy-note" id="privacy-note">We use your details only to reply to your request. See our <a href="privacy.html">privacy policy</a>.</p>
           <div class="field-wide form-foot">
-            <button class="btn btn-gold" type="submit">Send request</button>
+            <button class="btn btn-gold" type="submit" aria-describedby="privacy-note">Send request</button>
             <p class="status" id="form-status" role="status" aria-live="polite"></p>
           </div>
         </form>
@@ -235,12 +265,16 @@
   <footer class="site-footer">
     <div class="wrap footer-row">
       <img src="assets/brand/logo-horizontal-reversed.svg" alt="G&amp;E Tile and Flooring" width="200" height="51">
-      <p>&copy; <span id="year"></span> G&amp;E Tile and Flooring. All rights reserved.</p>
+      <div class="footer-info">
+        <p>&copy; <span id="year"></span> G&amp;E Tile and Flooring. All rights reserved.</p>
+        <p><a href="privacy.html">Privacy policy</a></p>
+        <p>Having trouble using this site? Call <a data-phone-text href="tel:6123249962">(612) 324-9962</a> or email <a data-email-text href="mailto:gregsfloorings@gmail.com">gregsfloorings@gmail.com</a> and we will help.</p>
+      </div>
     </div>
   </footer>
 
   <script src="js/config.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/vendor/three.min.js"></script>
   <script src="js/boards.js"></script>
   <script src="js/main.js"></script>
 </body>
