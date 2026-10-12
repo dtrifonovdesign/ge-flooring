@@ -1,0 +1,13 @@
+{
+  // Static site served by Cloudflare. Run scripts\deploy.ps1 to publish.
+  "name": "gregstilepro",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "gregstilepro.com", "custom_domain": true },
+    { "pattern": "www.gregstilepro.com", "custom_domain": true }
+  ]
+}

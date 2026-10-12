@@ -24,15 +24,19 @@ npx http-server -p 5173
 
 Then open http://localhost:5173.
 
-## Deploy on GitHub Pages
+## Publishing (Cloudflare, gregstilepro.com)
 
-1. Create a repository and push this folder to the `main` branch.
-2. Repository **Settings > Pages > Build and deployment**: Source = *Deploy from a branch*, Branch = `main` / `(root)`.
-3. The site goes live at `https://<user>.github.io/<repo>/`. All paths are relative, so it works in a subfolder.
+The live site is served by Cloudflare at **https://gregstilepro.com** (and `www.`). Pushing to GitHub saves the code but does **not** publish it. To publish after any change:
 
-## Before you add a custom domain
+```bash
+powershell -File scripts\deploy.ps1
+```
 
-The address of the site appears in a few places. Search the project for `dtrifonovdesign.github.io/ge-flooring` and replace it with the new domain (keep the `https://`):
+That copies only the public files into `dist/` and runs `wrangler deploy`, using `wrangler.jsonc` (site name, the two custom domains, and the 404 page). It needs Node.js and a Cloudflare sign-in (`npx wrangler login` once). The old GitHub Pages copy at `dtrifonovdesign.github.io/ge-flooring` is no longer updated.
+
+## If the domain ever changes
+
+The address of the site appears in a few places. Search the project for `https://gregstilepro.com` and replace it with the new domain (keep the `https://`), and update the `routes` in `wrangler.jsonc`:
 
 - `index.html`: the canonical link, the `og:url` and `og:image` tags, and the JSON-LD block
 - `privacy.html`: the canonical link
@@ -44,7 +48,7 @@ The phone number and email also appear once in the JSON-LD block in `index.html`
 ## Site basics
 
 - **Privacy policy** (`privacy.html`): no cookies, analytics or ad trackers. If you add any (Google Analytics, a chat widget, a map embed), update this page first.
-- **404 page** (`404.html`): GitHub Pages and Cloudflare Pages both serve it automatically for missing addresses.
+- **404 page** (`404.html`): Cloudflare serves it automatically for missing addresses (`not_found_handling` in `wrangler.jsonc`). Cloudflare also serves the privacy page at `/privacy` (no `.html`).
 - **Fonts and the 3D library** are hosted in the project (`assets/fonts`, `js/vendor`), so visitors make no requests to Google or a CDN.
 - **Accessibility:** checked with axe-core (WCAG 2.2 AA) on all three pages with zero violations. Keep text contrast at 4.5:1 or better when changing colors, and keep alt text on every photo.
 
